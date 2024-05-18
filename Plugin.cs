@@ -9,7 +9,7 @@ namespace VentSpawnFix
     [BepInPlugin(PLUGIN_GUID, PLUGIN_NAME, PLUGIN_VERSION)]
     public class Plugin : BaseUnityPlugin
     {
-        const string PLUGIN_GUID = "butterystancakes.lethalcompany.ventspawnfix", PLUGIN_NAME = "Vent Spawn Fix", PLUGIN_VERSION = "1.0.0";
+        const string PLUGIN_GUID = "butterystancakes.lethalcompany.ventspawnfix", PLUGIN_NAME = "Vent Spawn Fix", PLUGIN_VERSION = "1.0.1";
         internal static new ManualLogSource Logger;
 
         void Awake()
@@ -45,7 +45,7 @@ namespace VentSpawnFix
                     return false;
                 }
 
-                vent = vents[Random.Range(0, vents.Count)];
+                vent = vents[__instance.AnomalyRandom.Next(0, vents.Count)];
                 Plugin.Logger.LogInfo("Enemy successfully reassigned to another empty vent");
             }
 
