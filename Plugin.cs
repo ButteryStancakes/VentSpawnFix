@@ -98,7 +98,7 @@ namespace VentSpawnFix
                         return;
                     }
 
-                    int time = (int)(__instance.timeScript.lengthOfHours * ___currentHour) + __instance.AnomalyRandom.Next(10, (int)__instance.timeScript.lengthOfHours * __instance.hourTimeBetweenEnemySpawnBatches);
+                    int time = (int)(__instance.timeScript.lengthOfHours * ___currentHour) + __instance.AnomalyRandom.Next(10, (int)(__instance.timeScript.lengthOfHours * __instance.hourTimeBetweenEnemySpawnBatches));
                     EnemyVent vent2 = vents[__instance.AnomalyRandom.Next(0, vents.Count)];
 
                     __instance.currentEnemyPower += enemy.PowerLevel;
