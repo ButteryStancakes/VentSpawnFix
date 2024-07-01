@@ -32,7 +32,7 @@ namespace VentSpawnFix
         {
             if (vent.occupied)
             {
-                Plugin.Logger.LogInfo($"A new enemy tried to occupy vent with {vent.enemyType.name} already inside");
+                Plugin.Logger.LogInfo($"A new enemy tried to occupy vent with \"{vent.enemyType.enemyName}\" already inside");
 
                 List<EnemyVent> vents = __instance.allEnemyVents.Where(enemyVent => !enemyVent.occupied).ToList();
                 
@@ -57,7 +57,7 @@ namespace VentSpawnFix
             EnemyType enemy = vent.enemyType;
             if (enemy.spawnInGroupsOf > 1)
             {
-                Plugin.Logger.LogInfo($"Enemy \"{enemy.name}\" spawned in vent, requesting group of {enemy.spawnInGroupsOf}");
+                Plugin.Logger.LogInfo($"Enemy \"{enemy.enemyName}\" spawned in vent, requesting group of {enemy.spawnInGroupsOf}");
 
                 int enemyIndex = -1;
                 for (int i = 0; i < __instance.currentLevel.Enemies.Count; i++)
@@ -71,30 +71,30 @@ namespace VentSpawnFix
 
                 if (enemyIndex < 0)
                 {
-                    Plugin.Logger.LogWarning($"Tried to spawn additional \"{enemy.name}\", but they do not exist in the current level's spawn pool");
+                    Plugin.Logger.LogWarning($"Tried to spawn additional \"{enemy.enemyName}\", but they do not exist in the current level's spawn pool");
                     return;
                 }
 
-                int spawnsLeft = enemy.spawnInGroupsOf;
+                int spawnsLeft = enemy.spawnInGroupsOf - 1;
                 List<EnemyVent> vents = __instance.allEnemyVents.Where(enemyVent => !enemyVent.occupied).ToList();
 
                 while (spawnsLeft > 0)
                 {
                     if (vents.Count <= 0)
                     {
-                        Plugin.Logger.LogInfo($"Can't spawn additional \"{enemy.name}\" (all vents are occupied)");
+                        Plugin.Logger.LogInfo($"Can't spawn additional \"{enemy.enemyName}\" (all vents are occupied)");
                         return;
                     }
 
                     if (enemy.numberSpawned >= enemy.MaxCount)
                     {
-                        Plugin.Logger.LogInfo($"Can't spawn additional \"{enemy.name}\" ({enemy.MaxCount} have already spawned)");
+                        Plugin.Logger.LogInfo($"Can't spawn additional \"{enemy.enemyName}\" ({enemy.MaxCount} have already spawned)");
                         return;
                     }
 
-                    if (enemy.PowerLevel > __instance.currentLevel.maxEnemyPowerCount - __instance.currentEnemyPower)
+                    if (enemy.PowerLevel > __instance.currentMaxInsidePower - __instance.currentEnemyPower)
                     {
-                        Plugin.Logger.LogInfo($"Can't spawn additional \"{enemy.name}\" ({__instance.currentEnemyPower} + {enemy.PowerLevel} would exceed max power level of {__instance.currentLevel.maxEnemyPowerCount})");
+                        Plugin.Logger.LogInfo($"Can't spawn additional \"{enemy.enemyName}\" ({__instance.currentEnemyPower} + {enemy.PowerLevel} would exceed max power level of {__instance.currentMaxInsidePower})");
                         return;
                     }
 
@@ -110,14 +110,14 @@ namespace VentSpawnFix
                         vent2.SyncVentSpawnTimeClientRpc(time, enemyIndex);
                     enemy.numberSpawned++;
 
-                    spawnsLeft--;
-                    vents.Remove(vent2);
                     __instance.enemySpawnTimes.Add(time);
+                    vents.Remove(vent2);
 
-                    Plugin.Logger.LogInfo($"Spawning additional \"{enemy.name}\" in vent");
+                    Plugin.Logger.LogInfo($"Spawning additional \"{enemy.enemyName}\" in vent");
+                    spawnsLeft--;
                 }
 
-                if (spawnsLeft < enemy.spawnInGroupsOf)
+                if (spawnsLeft < enemy.spawnInGroupsOf - 1)
                     __instance.enemySpawnTimes.Sort();
             }
         }
