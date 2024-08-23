@@ -36,9 +36,19 @@ namespace VentSpawnFix
     {
         [HarmonyPatch(typeof(RoundManager), "AssignRandomEnemyToVent")]
         [HarmonyPostfix]
-        static void RoundManagerPostAssignRandomEnemyToVent(RoundManager __instance, EnemyVent vent, int ___currentHour)
+        static void RoundManagerPostAssignRandomEnemyToVent(RoundManager __instance, EnemyVent vent, bool __result, int ___currentHour)
         {
-            EnemyType enemy = vent.enemyType;
+            // returning false means no enemy was able to spawn
+            if (!__result)
+                return;
+
+            EnemyType enemy = vent?.enemyType;
+            if (enemy == null)
+            {
+                Plugin.Logger.LogWarning("AssignRandomEnemyToVent completed without assigning an enemy to the vent. This shouldn't happen");
+                return;
+            }
+
             if (enemy.spawnInGroupsOf > 1)
             {
                 Plugin.Logger.LogDebug($"Enemy \"{enemy.enemyName}\" spawned in vent, requesting group of {enemy.spawnInGroupsOf}");
