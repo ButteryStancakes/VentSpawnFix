@@ -3,8 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>VentSpawnFix</AssemblyName>
-    <Description>Fixes a bug with the "spawn wave" logic for indoor enemies.</Description>
-    <Version>1.1.1</Version>
+    <Description>Allows indoor enemies to spawn in groups larger than 1, like outdoor and daytime enemies.</Description>
+    <Version>1.2.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RestoreAdditionalProjectSources>
