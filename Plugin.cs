@@ -11,7 +11,7 @@ namespace VentSpawnFix
     //[BepInDependency("Dev1A3.LethalFixes", BepInDependency.DependencyFlags.SoftDependency)]
     public class Plugin : BaseUnityPlugin
     {
-        const string PLUGIN_GUID = "butterystancakes.lethalcompany.ventspawnfix", PLUGIN_NAME = "Vent Spawn Fix", PLUGIN_VERSION = "1.2.0";
+        const string PLUGIN_GUID = "butterystancakes.lethalcompany.ventspawnfix", PLUGIN_NAME = "Vent Spawn Fix", PLUGIN_VERSION = "1.2.1";
         internal static new ManualLogSource Logger;
 
         void Awake()

@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>VentSpawnFix</AssemblyName>
     <Description>Allows indoor enemies to spawn in groups larger than 1, like outdoor and daytime enemies.</Description>
-    <Version>1.2.0</Version>
+    <Version>1.2.1</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <RestoreAdditionalProjectSources>
