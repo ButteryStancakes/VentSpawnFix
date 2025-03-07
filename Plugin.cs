@@ -93,19 +93,19 @@ namespace VentSpawnFix
                     if (vents.Count <= 0)
                     {
                         Plugin.Logger.LogDebug($"Can't spawn additional \"{enemy.enemyName}\" (all vents are occupied)");
-                        return;
+                        break;
                     }
 
                     if (enemy.numberSpawned >= enemy.MaxCount)
                     {
                         Plugin.Logger.LogDebug($"Can't spawn additional \"{enemy.enemyName}\" ({enemy.MaxCount} have already spawned)");
-                        return;
+                        break;
                     }
 
                     if (enemy.PowerLevel > __instance.currentMaxInsidePower - __instance.currentEnemyPower)
                     {
                         Plugin.Logger.LogDebug($"Can't spawn additional \"{enemy.enemyName}\" ({__instance.currentEnemyPower} + {enemy.PowerLevel} would exceed max power level of {__instance.currentMaxInsidePower})");
-                        return;
+                        break;
                     }
 
                     int time = (int)vent.spawnTime; //(int)(__instance.timeScript.lengthOfHours * ___currentHour) + __instance.AnomalyRandom.Next(10, (int)(__instance.timeScript.lengthOfHours * __instance.hourTimeBetweenEnemySpawnBatches));
