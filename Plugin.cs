@@ -1,5 +1,5 @@
 ﻿using BepInEx;
-//using BepInEx.Bootstrap;
+using BepInEx.Bootstrap;
 using BepInEx.Logging;
 using HarmonyLib;
 using System.Collections.Generic;
@@ -8,22 +8,23 @@ using System.Linq;
 namespace VentSpawnFix
 {
     [BepInPlugin(PLUGIN_GUID, PLUGIN_NAME, PLUGIN_VERSION)]
-    //[BepInDependency("Dev1A3.LethalFixes", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency(GUID_LOBBY_COMPATIBILITY, BepInDependency.DependencyFlags.SoftDependency)]
     public class Plugin : BaseUnityPlugin
     {
-        const string PLUGIN_GUID = "butterystancakes.lethalcompany.ventspawnfix", PLUGIN_NAME = "Vent Spawn Fix", PLUGIN_VERSION = "1.2.2";
+        internal const string PLUGIN_GUID = "butterystancakes.lethalcompany.ventspawnfix", PLUGIN_NAME = "Vent Spawn Fix", PLUGIN_VERSION = "1.2.3";
         internal static new ManualLogSource Logger;
+
+        const string GUID_LOBBY_COMPATIBILITY = "BMX.LobbyCompatibility";
 
         void Awake()
         {
-            /*if (Chainloader.PluginInfos.ContainsKey("Dev1A3.LethalFixes"))
-            {
-                Logger.LogWarning("LethalFixes has been detected in your plugin list, which as of v1.1.5, already contains the same fixes for vent spawning.");
-                Logger.LogWarning("Loading has been cancelled to prevent conflicts. You can safely remove VentSpawnFix next time you exit the game, since you don't need it.");
-                return;
-            }*/
-
             Logger = base.Logger;
+
+            if (Chainloader.PluginInfos.ContainsKey(GUID_LOBBY_COMPATIBILITY))
+            {
+                Logger.LogInfo("CROSS-COMPATIBILITY - Lobby Compatibility detected");
+                LobbyCompatibility.Init();
+            }
 
             new Harmony(PLUGIN_GUID).PatchAll();
 
